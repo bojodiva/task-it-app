@@ -10,7 +10,7 @@ export default function TrackTaskPage(){
         navigate("/plan")
     }
 
-    const getStatusColor = (status) => {
+    const getStatusColor = (status) => { // this function was particularly fun to learn cause I was initially thinking of how I would be able to display different colored text based on the status.
         if(status === "Completed"){
             return "text-green"
         }else if(status === "In Progress"){

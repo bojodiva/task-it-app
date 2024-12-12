@@ -11,12 +11,14 @@ export default function IndividualTask(){
     const task = allTasks.find((task) => task.name === id)
     
     const currentTime = new Date();
-    const creationTime = new Date(task.creationTime);
+    
+    //const creationTime = new Date(task.creationTime); I thought I will be needing this in the calculation of the time left. Although i might need it later tho
+
     const timelineDate = new Date(task.timeline);
 
     const timeleftInSeconds = Math.max((timelineDate - currentTime) / 1000, 0);
 
-    const isOverdue = currentTime > timelineDate;
+    const isOverdue = currentTime > timelineDate; // to know if the time left has expired
 
     useEffect(() =>{
     if(isOverdue){
@@ -24,12 +26,12 @@ export default function IndividualTask(){
     }
     }, [isOverdue])
 
-    const handleMarkAsCompleted = () => {
+    const handleMarkAsCompleted = () => { //this is the function or when the user clicks the button to mark the task as completed
         dispatch(updateTaskStatus({ id: task.name, newStatus: "Completed" }));
         navigate("/track");
     };
 
-    const [timeleft, setTimeleft] = useState(timeleftInSeconds)
+    const [timeleft, setTimeleft] = useState(timeleftInSeconds) // I set a local state here to store the timeleft in second. This is because I will only be needing the state in this component.
 
     useEffect(() => {
         const interval = setInterval(() => {
