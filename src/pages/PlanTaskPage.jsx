@@ -1,4 +1,4 @@
-import { useNavigate, Link } from "react-router-dom"
+import { useNavigate, NavLink } from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux";
 import { updateFormField, resetFormField, setAllTasks } from "../redux/features/tasks/tasksSlice";
 
@@ -56,9 +56,9 @@ export default function PlanTaskPage(){
                             <td className="hidden md:table-cell border border-slate-300 p-2 text-left break-words">{task.description}</td>
                             <td className="border border-slate-300 p-2" >{task.timeline}</td>
                             <td className="border border-slate-300 p-2">
-                               <Link to={`/plan/${task.name}`}>
+                               <NavLink to={`/plan/${task.name}`}>
                                 <button className="border rounded-sm p-2 md:px-10">View Details</button>
-                               </Link>
+                               </NavLink>
                             </td>
                         </tr>
                     </tbody>

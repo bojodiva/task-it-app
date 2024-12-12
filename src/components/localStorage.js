@@ -1,4 +1,6 @@
+// here we have two functions
 
+//this is the first function to save content to local storage 
 export const saveToLocalStorage = (state) => {
     try{
         const convertedSerial = JSON.stringify(state)
@@ -8,6 +10,7 @@ export const saveToLocalStorage = (state) => {
     }
 }
 
+//this is the second function to get the previously saved content in the local storage
 export const getFromLocalStorage = () => {
     try{
         const convertedSerial = localStorage.getItem("taskState");

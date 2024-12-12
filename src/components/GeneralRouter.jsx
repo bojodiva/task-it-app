@@ -1,3 +1,4 @@
+//I like to have my routings in a seperate component just to keep my code organised
 import { Routes, Route } from "react-router-dom";
 import LandingPage from "../pages/LandingPage";
 import NotFoundPage from "../pages/NotFoundPage";
