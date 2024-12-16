@@ -37,6 +37,8 @@ export default function PlanTaskPage(){
         </div>
 
         <div className="p-10 flex flex-col justify-center">
+            {/* checking to see if there are any task planned, if true mapping through the array of tasks and if not returning "no planned task" to the user */}
+                    {allTasks && allTasks.length > 0 ? (
                 <table className="w-full table-fixed border-collapse border-spacing-2 border border-slate-300">
                     <thead>
                         <tr>
@@ -47,9 +49,7 @@ export default function PlanTaskPage(){
                         </tr>
                     </thead>
                     
-            {/* checking to see if there are any task planned, if true mapping through the array of tasks and if not returning "no planned task" to the user */}
-                    {allTasks && allTasks.length > 0 ? (
-                        allTasks.map((task) => (
+                        {allTasks.map((task) => (
                        <tbody key={task.name} className="text-center">
                         <tr>
                             <td className="border border-slate-300 p-2">{task.name}</td>
@@ -62,23 +62,24 @@ export default function PlanTaskPage(){
                             </td>
                         </tr>
                     </tbody>
-            ))) : (
-                <p className="p-10">No Task has been planned yet</p>
-            )}
+                ))}
             </table>
+            ) : (
+                <p className="p-10 text-center">No Task has been planned yet</p>
+            )}
         </div>
 
         {/* form implementation */}
         <div className="flex justify-center p-5">
            <form onSubmit={handleSaveClick} className="flex flex-col p-5 gap-3">
-             <label className="flex justify-start">Task Name</label>
-             <input type="text" name="name" value={name} onChange={handleFormFieldChange} placeholder="Name your task" className="p-3  md:w-[700px]"/>
+             <label className="flex justify-start" for="name">Task Name</label>
+             <input type="text" name="name" value={name} onChange={handleFormFieldChange} placeholder="Name your task" className="p-3 md:w-[700px]"/>
 
-             <label className="flex justify-start">Task Description</label>
+             <label className="flex justify-start" for="description">Task Description</label>
              <input type="text" name="description" value={description} onChange={handleFormFieldChange} placeholder="describe your task" className="p-3 md:w-[700px]"/>
 
-             <label className="flex justify-start">Task Timeline</label>
-             <input type="date" name="timeline" value={timeline} onChange={handleFormFieldChange} placeholder="enter" className="p-3 md:w-[700px]"/>
+             <label className="flex justify-start" for="timeline">Task Timeline</label>
+             <input type="date" name="timeline" value={timeline} onChange={handleFormFieldChange} placeholder="enter" className="p-3 w-full md:w-[700px]"/>
 
              <button className="p-3 w-[280px] md:w-[700px] bg-main text-accent">Save Task</button>
            </form>
