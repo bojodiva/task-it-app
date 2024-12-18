@@ -1,15 +1,18 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate, useParams } from 'react-router-dom';
-import { updateTaskStatus,deleteTask } from '../redux/features/tasks/tasksSlice';
+import { useNavigate, useParams, NavLink} from 'react-router-dom';
+import { updateTaskStatus, deleteTask} from '../redux/features/tasks/tasksSlice';
 
 export default function IndividualTask(){
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const {id} = useParams();
+
+
     const {allTasks} = useSelector((state) => state.tasks)
+
     const task = allTasks.find((task) => task.name === id)
-    
+
     const currentTime = new Date();
     
     //const creationTime = new Date(task.creationTime); I thought I will be needing this in the calculation of the time left. Although i might need it later
@@ -84,9 +87,14 @@ export default function IndividualTask(){
                             {!isOverdue ? (
                                  <>
                                     <p className='m-5 md:text-xl font-bold'>Time Left: {formatTimeLeft(timeleft)}</p>
-                                    <div className='flex gap-5'>
+                                    <div className='md:flex gap-2'>
+                                    <div className='flex gap-7 m-3'>
                                     <button onClick={handleDeleteTask} className='bg-red text-main p-3 rounded-sm transition duration-300 ease-in-out transform hover:scale-105'>Delete</button>
-                                    <button onClick={handleMarkAsCompleted} className='bg-green text-main p-3 rounded-sm transition duration-300 ease-in-out transform hover:scale-105'>Mark as completed</button>
+                                    <NavLink to={`/plan`} state={{ taskId: task.name }}>
+                                    <button className='bg-blue text-main p-3 px-5 rounded-sm transition duration-300 ease-in-out transform hover:scale-105'>Edit</button>
+                                    </NavLink>
+                                    </div>
+                                    <button onClick={handleMarkAsCompleted} className='bg-green m-3 text-main p-3 rounded-sm transition duration-300 ease-in-out transform hover:scale-105'>Mark as completed</button>
                                     </div>
                                  </>
                                  ):(

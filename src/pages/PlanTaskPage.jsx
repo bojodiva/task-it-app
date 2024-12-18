@@ -1,12 +1,28 @@
-import { useNavigate, NavLink } from "react-router-dom"
+import { useEffect } from "react"
+import { useNavigate, NavLink, useLocation } from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux";
-import { updateFormField, resetFormField, setAllTasks } from "../redux/features/tasks/tasksSlice";
+import { updateFormField, resetFormField, setAllTasks, editTask } from "../redux/features/tasks/tasksSlice";
 
 
 export default function PlanTaskPage(){
     const dispatch = useDispatch();
-    const {name, description, timeline, allTasks} = useSelector((state) => state.tasks);
     const navigate = useNavigate();
+    const location = useLocation();
+
+    const {name, description, timeline, allTasks} = useSelector((state) => state.tasks);
+
+    const taskId = location.state?.taskId; //getting the taskId for editing and checking if there actually exist that taskId
+    
+    useEffect(() => {
+        if (taskId) {
+            const task = allTasks.find((task) => task.name === taskId);
+            if(task){
+            dispatch(updateFormField({ field: "name", value: task.name }));
+            dispatch(updateFormField({ field: "description", value: task.description }));
+            dispatch(updateFormField({ field: "timeline", value: task.timeline }));
+            }
+        }
+    }, [taskId, dispatch]);
 
     const handleTrackTaskClick = () => {
         navigate("/track")
@@ -21,8 +37,16 @@ export default function PlanTaskPage(){
         e.preventDefault();
         const task = {name: name, description: description, timeline: timeline};
         if(name.trim() !== "" && description.trim() !== "" && timeline.trim() !== ""){
-            dispatch(setAllTasks(task));
-            dispatch(resetFormField())
+            if (taskId) {
+                // here I am dispatching the "editing an existing task" function
+                dispatch(editTask({ id: taskId, updatedTask: task }));
+            } else {
+                // dispatching new task addition function for when there is no taskId
+                dispatch(setAllTasks(task));
+            }
+    
+            // Resetting the form after save
+            dispatch(resetFormField());
         }
     }
 
