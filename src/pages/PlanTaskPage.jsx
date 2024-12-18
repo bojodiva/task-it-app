@@ -72,13 +72,13 @@ export default function PlanTaskPage(){
         {/* form implementation */}
         <div className="flex justify-center p-5">
            <form onSubmit={handleSaveClick} className="flex flex-col p-5 gap-3">
-             <label className="flex justify-start" for="name">Task Name</label>
+             <label className="flex justify-start" htmlFor="name">Task Name</label>
              <input type="text" name="name" value={name} onChange={handleFormFieldChange} placeholder="Name your task" className="p-3 md:w-[700px]"/>
 
-             <label className="flex justify-start" for="description">Task Description</label>
+             <label className="flex justify-start" htmlFor="description">Task Description</label>
              <input type="text" name="description" value={description} onChange={handleFormFieldChange} placeholder="describe your task" className="p-3 md:w-[700px]"/>
 
-             <label className="flex justify-start" for="timeline">Task Timeline</label>
+             <label className="flex justify-start" htmlFor="timeline">Task Timeline</label>
              <input type="date" name="timeline" value={timeline} onChange={handleFormFieldChange} placeholder="enter" className="p-3 w-full md:w-[700px]"/>
 
              <button className="p-3 w-[280px] md:w-[700px] bg-main text-accent">Save Task</button>

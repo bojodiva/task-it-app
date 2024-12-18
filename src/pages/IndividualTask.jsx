@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
-import { updateTaskStatus } from '../redux/features/tasks/tasksSlice';
+import { updateTaskStatus,deleteTask } from '../redux/features/tasks/tasksSlice';
 
 export default function IndividualTask(){
     const navigate = useNavigate();
@@ -12,13 +12,18 @@ export default function IndividualTask(){
     
     const currentTime = new Date();
     
-    //const creationTime = new Date(task.creationTime); I thought I will be needing this in the calculation of the time left. Although i might need it later tho
+    //const creationTime = new Date(task.creationTime); I thought I will be needing this in the calculation of the time left. Although i might need it later
 
     const timelineDate = new Date(task.timeline);
 
     const timeleftInSeconds = Math.max((timelineDate - currentTime) / 1000, 0);
 
     const isOverdue = currentTime > timelineDate; // to know if the time left has expired
+
+    const handleDeleteTask = () => {
+        dispatch(deleteTask({id: task.name}));
+        navigate("/plan")
+    }
 
     useEffect(() =>{
     if(isOverdue){
@@ -78,8 +83,11 @@ export default function IndividualTask(){
                         <>
                             {!isOverdue ? (
                                  <>
-                                    <p className='m-5 text-xl font-bold'>Time Left: {formatTimeLeft(timeleft)}</p>
+                                    <p className='m-5 md:text-xl font-bold'>Time Left: {formatTimeLeft(timeleft)}</p>
+                                    <div className='flex gap-5'>
+                                    <button onClick={handleDeleteTask} className='bg-red text-main p-3 rounded-sm transition duration-300 ease-in-out transform hover:scale-105'>Delete</button>
                                     <button onClick={handleMarkAsCompleted} className='bg-green text-main p-3 rounded-sm transition duration-300 ease-in-out transform hover:scale-105'>Mark as completed</button>
+                                    </div>
                                  </>
                                  ):(
                                     <p className='text-red text-xl'>{task.status}</p>

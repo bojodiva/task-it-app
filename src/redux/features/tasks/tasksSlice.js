@@ -37,8 +37,12 @@ export const tasksSlice = createSlice({
                 state.allTasks[taskIndex].status = newStatus;
             }
         },
+        deleteTask: (state, action) => {
+            const {id} = action.payload;
+            state.allTasks = state.allTasks.filter((task) => task.name !== id);
+        }
     }
 })
 
 export default tasksSlice.reducer;
-export const { updateFormField, resetFormField, setAllTasks, updateTaskStatus } = tasksSlice.actions 
+export const { updateFormField, resetFormField, setAllTasks, updateTaskStatus, deleteTask } = tasksSlice.actions 
